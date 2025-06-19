@@ -1,0 +1,222 @@
+﻿@using System.Globalization
+@model SporKulubuYonetimSistemi.Models.HomeViewModel
+@if (TempData["Mesaj"] is string msg)
+{
+    <div class="alert alert-success alert-modern text-center">
+        <i class="fas fa-check-circle me-2"></i>@msg
+    </div>
+}
+
+<!-- ░░ HERO / TANITIM ░░ -->
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Haydi Spora Başla!</h1>
+                        <p class="hero-subtitle">Fiziksel gelişimin ve sosyal başarının adresi</p>
+                        <div class="hero-buttons">
+                            <a href="#membership" class="btn btn-hero-primary">
+                                <i class="fas fa-play me-2"></i>Hemen Başla
+                            </a>
+                            <a asp-controller="About" asp-action="Index" class="btn btn-hero-outline">
+                                <i class="fas fa-info-circle me-2"></i>Daha Fazla Bilgi
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <img src="~/images/tanıtım.png" class="img-fluid rounded-4 shadow-lg" alt="Tanıtım Görseli">
+                        <div class="hero-badge">
+                            <i class="fas fa-trophy"></i>
+                            <span>2024'ten Beri</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ░░ HAKKIMIZDA ÖZET ░░ -->
+<section class="about-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Hakkımızda</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="about-content">
+                    <p class="about-text">
+                        Spor Kulübü olarak, bireylerin fiziksel ve zihinsel gelişimlerine katkı sağlamak amacıyla
+                        2024 yılından bu yana hizmet veriyoruz. Profesyonel antrenör kadromuzla her yaş grubuna
+                        uygun spor branşlarında etkinlikler sunuyoruz. Sağlıklı yaşamın anahtarını birlikte
+                        keşfetmeye hazır mısınız?
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>500+</h4>
+                                <span>Aktif Üye</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>15+</h4>
+                                <span>Spor Branşı</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>100+</h4>
+                                <span>Başarı Hikayesi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ░░ DUYURULAR ░░ -->
+<section class="announcements-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="fas fa-bullhorn me-2"></i>Duyurular
+            </h2>
+        </div>
+
+        @if (Model.Duyurular?.Any() == true)
+        {
+            <div class="announcements-grid">
+                @foreach (var d in Model.Duyurular)
+                {
+                    <div class="announcement-card">
+                        <div class="announcement-header">
+                            <h5 class="announcement-title">@d.Baslik</h5>
+                            <span class="announcement-date">
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                @d.Tarih?.ToString("dd.MM.yyyy")
+                            </span>
+                        </div>
+                        <p class="announcement-content">@d.Icerik</p>
+                        <a asp-controller="Duyurular" asp-action="Detay" asp-route-id="@d.DuyuruId"
+                           class="announcement-link">
+                            Detayları Gör <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <i class="fas fa-info-circle"></i>
+                <p>Henüz duyuru yok.</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- ░░ BRANŞLAR ░░ -->
+<section class="branches-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Branşlarımız</h2>
+            <p class="section-subtitle">Hangi spor dalında kendinizi geliştirmek istiyorsunuz?</p>
+            <div class="section-divider"></div>
+        </div>
+        <div class="branches-grid">
+            @foreach (var b in Model.Branslar)
+            {
+                <div class="branch-card">
+                    <div class="branch-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h6 class="branch-name">@b.BransAdi</h6>
+                    <div class="branch-overlay">
+                        <span>Detaylar</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ░░ ÜYELİK PLANLARI ░░ -->
+<section id="membership" class="membership-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Üyelik Planlarımız</h2>
+            <p class="section-subtitle">Size en uygun planı seçin ve spor yolculuğunuza başlayın</p>
+            <div class="section-divider"></div>
+        </div>
+        <div class="membership-grid">
+            @foreach (var plan in Model.Planlar)
+            {
+                <div class="membership-card">
+                    <div class="membership-header">
+                        <div class="membership-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5 class="membership-title">@plan.PlanAdi</h5>
+                    </div>
+                    <div class="membership-body">
+                        <div class="membership-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>@plan.ToplamGirisHakki Giriş Hakkı</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Profesyonel Antrenör Desteği</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Modern Ekipman Kullanımı</span>
+                            </div>
+                        </div>
+                        <div class="membership-price">
+                            @plan.GirisUcreti.ToString("C", new CultureInfo("tr-TR"))
+                        </div>
+                    </div>
+                    <div class="membership-footer">
+                        <form asp-controller="Membership" asp-action="Buy" method="get">
+                            <input type="hidden" name="planId" value="@plan.PlanId" />
+                            <div class="branch-select">
+                                <select name="branchId" class="form-select-modern" aria-label="Branş seçiniz">
+                                    <option value="">Branş Seçiniz</option>
+                                    @foreach (var b in Model.Branslar)
+                                    {
+                                        <option value="@b.BransId">@b.BransAdi</option>
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-membership">
+                                <i class="fas fa-rocket me-2"></i>Üyelik Al
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

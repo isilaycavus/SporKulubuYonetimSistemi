@@ -1,0 +1,538 @@
+﻿@model SporKulubuYonetimSistemi.Models.RegisterViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol - Spor Kulübü</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --primary-blue-dark: #1d4ed8;
+            --primary-blue-light: #3b82f6;
+            --accent-blue: #60a5fa;
+            --light-blue: #dbeafe;
+            --very-light-blue: #eff6ff;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --danger-red: #ef4444;
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--very-light-blue) 0%, var(--neutral-50) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--neutral-700);
+            line-height: 1.6;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--neutral-200);
+            overflow: hidden;
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+            padding: 32px 32px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-title {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-body {
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--neutral-700);
+            margin-bottom: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px 16px 48px;
+            border: 2px solid var(--neutral-200);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            background: white;
+            color: var(--neutral-700);
+            transition: all 0.3s ease;
+        }
+
+            .form-input:focus {
+                outline: none;
+                border-color: var(--primary-blue);
+                box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+                transform: translateY(-1px);
+            }
+
+                .form-input:focus + .input-icon {
+                    color: var(--primary-blue);
+                    transform: scale(1.1);
+                }
+
+            .form-input.input-validation-error {
+                border-color: var(--danger-red);
+                box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+            }
+
+            .form-input.valid {
+                border-color: var(--success-green);
+                box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--neutral-400);
+            font-size: 18px;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--neutral-400);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+
+            .password-toggle:hover {
+                color: var(--primary-blue);
+            }
+
+        .field-validation-error {
+            color: var(--danger-red);
+            font-size: 12px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+            .field-validation-error::before {
+                content: '\f06a';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+            }
+
+        .error-alert {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--danger-red);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .error-alert::before {
+                content: '\f071';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+            }
+
+        .password-strength {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: var(--neutral-50);
+            border-radius: 8px;
+            font-size: 12px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+            .password-strength.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .strength-bar {
+            height: 4px;
+            background: var(--neutral-200);
+            border-radius: 2px;
+            margin: 6px 0;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            width: 0%;
+        }
+
+        .strength-weak .strength-fill {
+            background: var(--danger-red);
+            width: 25%;
+        }
+
+        .strength-medium .strength-fill {
+            background: var(--warning-orange);
+            width: 50%;
+        }
+
+        .strength-good .strength-fill {
+            background: var(--success-green);
+            width: 75%;
+        }
+
+        .strength-strong .strength-fill {
+            background: var(--success-green);
+            width: 100%;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+            .submit-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                transition: left 0.5s ease;
+            }
+
+            .submit-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+            }
+
+                .submit-btn:hover::before {
+                    left: 100%;
+                }
+
+            .submit-btn:active {
+                transform: translateY(0);
+            }
+
+            .submit-btn:disabled {
+                background: var(--neutral-300);
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+        }
+
+        .form-footer {
+            padding: 24px 32px;
+            background: var(--neutral-50);
+            text-align: center;
+            border-top: 1px solid var(--neutral-200);
+        }
+
+            .form-footer p {
+                color: var(--neutral-600);
+                font-size: 14px;
+                margin: 0;
+            }
+
+            .form-footer a {
+                color: var(--primary-blue);
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.2s ease;
+            }
+
+                .form-footer a:hover {
+                    color: var(--primary-blue-dark);
+                    text-decoration: underline;
+                }
+
+        .form-input:focus-visible,
+        .submit-btn:focus-visible {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h2 class="form-title">Kayıt Ol</h2>
+            <p class="form-subtitle">Spor kulübüne katılın ve başlayın</p>
+        </div>
+
+        <form asp-action="Register" method="post" class="form-body" id="registrationForm">
+            <div class="form-group">
+                <label asp-for="AdSoyad" class="form-label">Ad Soyad</label>
+                <div class="input-wrapper">
+                    <input asp-for="AdSoyad" class="form-input" placeholder="Adınızı ve soyadınızı girin" />
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+                <span asp-validation-for="AdSoyad" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label">Email</label>
+                <div class="input-wrapper">
+                    <input asp-for="Email" class="form-input" placeholder="E-mail adresinizi girin" />
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+                <span asp-validation-for="Email" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Sifre" class="form-label">Şifre</label>
+                <div class="input-wrapper">
+                    <input asp-for="Sifre" type="password" class="form-input" placeholder="Güçlü bir şifre oluşturun" />
+                    <i class="fas fa-lock input-icon"></i>
+                    <i class="fas fa-eye password-toggle" id="passwordToggle"></i>
+                </div>
+                <div class="password-strength" id="passwordStrength">
+                    <div class="strength-text">Şifre Gücü: <span id="strengthText">Zayıf</span></div>
+                    <div class="strength-bar">
+                        <div class="strength-fill"></div>
+                    </div>
+                </div>
+                <span asp-validation-for="Sifre" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SifreTekrar" class="form-label">Şifre Tekrar</label>
+                <div class="input-wrapper">
+                    <input asp-for="SifreTekrar" type="password" class="form-input" placeholder="Şifrenizi tekrar girin" />
+                    <i class="fas fa-lock input-icon"></i>
+                    <i class="fas fa-eye password-toggle" id="passwordConfirmToggle"></i>
+                </div>
+                <span asp-validation-for="SifreTekrar" class="field-validation-error"></span>
+            </div>
+
+            @if (ViewBag.Hata != null)
+            {
+                <div class="error-alert">@ViewBag.Hata</div>
+            }
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <div class="loading-spinner" id="loadingSpinner"></div>
+                <span id="submitText">Kayıt Ol</span>
+            </button>
+        </form>
+
+        <div class="form-footer">
+            <p>Zaten hesabınız var mı? <a href="#" id="loginLink">Giriş Yapın</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.querySelector('input[name="Sifre"]');
+            const passwordConfirmInput = document.querySelector('input[name="SifreTekrar"]');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const submitText = document.getElementById('submitText');
+
+            // Password toggle functionality
+            function setupPasswordToggle(inputSelector, toggleId) {
+                const input = document.querySelector(inputSelector);
+                const toggle = document.getElementById(toggleId);
+
+                if (input && toggle) {
+                    toggle.addEventListener('click', function() {
+                        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                        input.setAttribute('type', type);
+
+                        if (type === 'text') {
+                            toggle.classList.remove('fa-eye');
+                            toggle.classList.add('fa-eye-slash');
+                        } else {
+                            toggle.classList.remove('fa-eye-slash');
+                            toggle.classList.add('fa-eye');
+                        }
+                    });
+                }
+            }
+
+            setupPasswordToggle('input[name="Sifre"]', 'passwordToggle');
+            setupPasswordToggle('input[name="SifreTekrar"]', 'passwordConfirmToggle');
+
+            // Password strength indicator
+            function getPasswordStrength(password) {
+                let strength = 0;
+                if (password.length >= 8) strength++;
+                if (/[a-z]/.test(password)) strength++;
+                if (/[A-Z]/.test(password)) strength++;
+                if (/[0-9]/.test(password)) strength++;
+                if (/[^A-Za-z0-9]/.test(password)) strength++;
+                return strength;
+            }
+
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    const password = this.value;
+                    const strength = getPasswordStrength(password);
+
+                    const strengthContainer = document.getElementById('passwordStrength');
+                    const strengthText = document.getElementById('strengthText');
+                    const strengthBar = strengthContainer.querySelector('.strength-bar');
+
+                    if (password.length > 0) {
+                        strengthContainer.classList.add('show');
+
+                        // Remove all strength classes
+                        strengthBar.className = 'strength-bar';
+
+                        if (strength <= 2) {
+                            strengthBar.classList.add('strength-weak');
+                            strengthText.textContent = 'Zayıf';
+                        } else if (strength === 3) {
+                            strengthBar.classList.add('strength-medium');
+                            strengthText.textContent = 'Orta';
+                        } else if (strength === 4) {
+                            strengthBar.classList.add('strength-good');
+                            strengthText.textContent = 'İyi';
+                        } else {
+                            strengthBar.classList.add('strength-strong');
+                            strengthText.textContent = 'Güçlü';
+                        }
+                    } else {
+                        strengthContainer.classList.remove('show');
+                    }
+                });
+            }
+
+            // Form submission with loading state
+            const form = document.getElementById('registrationForm');
+            if (form) {
+                form.addEventListener('submit', function() {
+                    submitBtn.disabled = true;
+                    loadingSpinner.style.display = 'inline-block';
+                    submitText.textContent = 'Kayıt Oluşturuluyor...';
+                });
+            }
+
+            // Input validation styling
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    const validationSpan = this.parentElement.parentElement.querySelector('.field-validation-error');
+                    if (validationSpan && validationSpan.textContent.trim() !== '') {
+                        this.classList.add('input-validation-error');
+                        this.classList.remove('valid');
+                    } else if (this.value.trim() !== '') {
+                        this.classList.add('valid');
+                        this.classList.remove('input-validation-error');
+                    }
+                });
+
+                input.addEventListener('input', function() {
+                    if (this.classList.contains('input-validation-error')) {
+                        this.classList.remove('input-validation-error');
+                    }
+                });
+            });
+
+            // Login link
+            const loginLink = document.getElementById('loginLink');
+            if (loginLink) {
+                loginLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Burada giriş sayfasına yönlendirme yapabilirsiniz
+                    window.location.href = '/Account/Login'; // Örnek URL
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

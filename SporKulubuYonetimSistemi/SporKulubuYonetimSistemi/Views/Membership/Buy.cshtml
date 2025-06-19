@@ -1,0 +1,26 @@
+﻿@model SporKulubuYonetimSistemi.Models.BuyViewModel
+@{
+    ViewData["Title"] = "Üyelik Satın Al";
+}
+
+<div class="container my-5">
+    <h1 class="mb-4">Üyelik Satın Al</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title text-primary">@Model.PlanAdi</h5>
+            <p class="card-text">
+                Branş: <strong>@Model.BransAdi</strong><br />
+                Ücret: <strong>@Model.Ucret ₺</strong>
+            </p>
+
+            <form asp-action="BuyConfirm" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="PlanId" />
+                <input type="hidden" asp-for="BransId" />
+                <button type="submit" class="btn btn-success">Satın Al</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary ms-2">İptal</a>
+            </form>
+        </div>
+    </div>
+</div>

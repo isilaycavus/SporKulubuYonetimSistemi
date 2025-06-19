@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Spor Kulübü</title>
+
+    <!-- STYLES -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SporKulubuYonetimSistemi.styles.css" asp-append-version="true" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha384-zOHWNsS4fO4+TeYAWVr4Kj8dK4N5nAxg2c0olkGZCp+FbmVaIeRpHA7gjF1R9bV1"
+          crossorigin="anonymous" />
+</head>
+
+<body>
+    <!-- ░░ NAVBAR ░░ -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+            <div class="container">
+                <!-- Logo + marka -->
+                <a class="navbar-brand d-flex align-items-center"
+                   asp-controller="Home" asp-action="Index">
+                    <img src="~/images/isilayın_kulubu.png" alt="Spor Kulübü Logosu"
+                         width="40" height="40" class="me-2" />
+                    <strong>Spor Kulübü</strong>
+                </a>
+
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div id="mainNavbar" class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="About" asp-action="Index">Hakkımızda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Branslar" asp-action="Index">Branşlar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Antrenorler" asp-action="Index">Antrenörler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Contact" asp-action="Index">İletişim</a>
+                        </li>
+                    </ul>
+
+                    <!-- Sağ taraf: giriş/çıkış -->
+                    <ul class="navbar-nav">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Profile" asp-action="Index">Profilim</a>
+                            </li>
+                        }
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <span class="navbar-text me-2">
+                                    Merhaba, @User.Identity!.Name!
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Logout">Çıkış</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Login">Giriş</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Register">Kayıt</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ░░ SAYFA GÖVDESİ ░░ -->
+    <div class="container">
+        <main role="main" class="pb-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- ░░ FOOTER ░░ -->
+    <footer class="border-top bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-2">&copy; 2025 Spor Kulübü</p>
+            <div>
+                <a href="https://instagram.com" class="text-dark me-3" target="_blank" rel="noopener">
+                    <i class="fab fa-instagram fa-lg"></i>
+                </a>
+                <a href="https://facebook.com" class="text-dark me-3" target="_blank" rel="noopener">
+                    <i class="fab fa-facebook fa-lg"></i>
+                </a>
+                <a href="https://youtube.com" class="text-dark" target="_blank" rel="noopener">
+                    <i class="fab fa-youtube fa-lg"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

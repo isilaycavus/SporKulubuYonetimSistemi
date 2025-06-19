@@ -1,0 +1,33 @@
+﻿@model SporKulubuYonetimSistemi.Models.BransDetayViewModel
+@{
+    ViewData["Title"] = Model.Brans.BransAdi + " Branşı";
+}
+
+<div class="container my-5">
+    <a asp-action="Index" class="btn btn-link mb-3">&laquo; Tüm Branşlar</a>
+
+    <h1 class="mb-4">@Model.Brans.BransAdi</h1>
+
+    <!-- Antrenörler -->
+    <h3 class="mb-3">Antrenörler</h3>
+    @if (Model.Antrenorler.Any())
+    {
+        <ul class="list-group mb-4">
+            @foreach (var a in Model.Antrenorler)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @a.AdSoyad
+                    <span class="badge bg-secondary">@a.Email</span>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="alert alert-info">Bu branş için atanmış antrenör bulunmuyor.</div>
+    }
+
+    <!-- İleride eklenebilecek alan -->
+    <h3 class="mt-5">Antrenman Programı</h3>
+    <p>Program bilgisi yakında eklenecek.</p>
+</div>

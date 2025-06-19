@@ -1,0 +1,201 @@
+﻿@model IEnumerable<SporKulubuYonetimSistemi.Models.Branslar>
+@{
+    ViewData["Title"] = "Branşlar";
+}
+
+<!-- Hero Section -->
+<div class="branches-hero-section">
+    <div class="hero-background">
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-content text-center">
+            <div class="hero-badge-top" data-aos="fade-down">
+                <span class="badge-text">🏃‍♂️ Spor Branşları</span>
+            </div>
+            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
+                <span class="title-highlight">Hangi</span> Sporda Kendinizi Geliştirmek İstiyorsunuz?
+            </h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="400">
+                Geniş branş seçeneklerimizle her seviyeye uygun antrenman programları
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Branches Content -->
+<div class="branches-content-section">
+    <div class="container">
+
+        <!-- Branch Categories Info -->
+        <div class="info-section" data-aos="fade-up">
+            <div class="row g-4 mb-5">
+                <div class="col-lg-4">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Grup Antrenmanları</h4>
+                        <p>Motivasyonunuzu artıran grup dinamiği ile antrenman yapın</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Kişisel Antrenman</h4>
+                        <p>Size özel hazırlanmış bireysel antrenman programları</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h4>Profesyonel Eğitim</h4>
+                        <p>Uzman antrenörlerimizle profesyonel seviyede eğitim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Branches Grid -->
+        <div class="section-header text-center" data-aos="fade-up">
+            <span class="section-badge">Branşlarımız</span>
+            <h2 class="section-title">Tüm Spor Branşları</h2>
+            <p class="section-subtitle">Seviyenize uygun branşı seçin ve spor yolculuğunuza başlayın</p>
+            <div class="section-divider"></div>
+        </div>
+
+        @if (Model?.Any() == true)
+        {
+            <div class="branches-grid" data-aos="fade-up" data-aos-delay="200">
+                @foreach (var b in Model)
+                {
+                    <div class="branch-card-modern" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="branch-card-inner">
+                            <div class="branch-front">
+                                <div class="branch-icon-container">
+                                    <div class="branch-icon">
+                                        <i class="fas fa-running"></i>
+                                    </div>
+                                    <div class="branch-glow"></div>
+                                </div>
+                                <h5 class="branch-name">@b.BransAdi</h5>
+                                <div class="branch-features">
+                                    <span class="feature-badge">Profesyonel</span>
+                                    <span class="feature-badge">Her Seviye</span>
+                                </div>
+                            </div>
+                            <div class="branch-back">
+                                <div class="branch-back-content">
+                                    <h5>@b.BransAdi</h5>
+                                    <p>Bu branşta kendinizi geliştirin ve hedeflerinize ulaşın.</p>
+                                    <div class="branch-stats">
+                                        <div class="stat">
+                                            <i class="fas fa-users"></i>
+                                            <span>Grup</span>
+                                        </div>
+                                        <div class="stat">
+                                            <i class="fas fa-clock"></i>
+                                            <span>Esnek</span>
+                                        </div>
+                                        <div class="stat">
+                                            <i class="fas fa-trophy"></i>
+                                            <span>Başarı</span>
+                                        </div>
+                                    </div>
+                                    <a asp-action="Detay" asp-route-id="@b.BransId" class="btn-branch-detail">
+                                        <i class="fas fa-arrow-right me-2"></i>Detayları Gör
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="branch-card-shadow"></div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state" data-aos="fade-up">
+                <div class="empty-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h4>Henüz Branş Eklenmemiş</h4>
+                <p>Yakında yeni spor branşları eklenecek!</p>
+            </div>
+        }
+
+        <!-- Call to Action -->
+        <div class="cta-section" data-aos="fade-up" data-aos-delay="400">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <div class="cta-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Spor Yolculuğunuza Başlayın!</h3>
+                    <p>Hangi branşı seçerseniz seçin, profesyonel antrenörlerimiz sizinle olacak.</p>
+                    <div class="cta-buttons">
+                        <a href="#membership" class="btn btn-cta-primary">
+                            <i class="fas fa-play me-2"></i>Hemen Başla
+                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-cta-outline">
+                            <i class="fas fa-info-circle me-2"></i>Daha Fazla Bilgi
+                        </a>
+                    </div>
+                </div>
+                <div class="cta-decoration">
+                    <div class="decoration-circle circle-1"></div>
+                    <div class="decoration-circle circle-2"></div>
+                    <div class="decoration-circle circle-3"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // AOS Animation Initialize
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+
+        // Branch card hover effects
+        document.querySelectorAll('.branch-card-modern').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) rotateY(180deg)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateY(0deg)';
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+}

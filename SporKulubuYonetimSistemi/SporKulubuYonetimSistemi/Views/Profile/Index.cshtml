@@ -1,0 +1,43 @@
+﻿@model SporKulubuYonetimSistemi.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Profilim";
+}
+
+<div class="container my-5">
+
+    <h2 class="mb-4">👤 Profil Bilgileri</h2>
+    <p><strong>Ad Soyad:</strong>  @Model.AdSoyad</p>
+    <p><strong>E-posta :</strong>  @Model.Email</p>
+
+    <h4 class="mt-4">🏋️ Kayıtlı Branşlar</h4>
+    @if (Model.Branslar.Count == 0)
+    {
+        <p class="text-muted">Henüz kayıtlı branş yok.</p>
+    }
+    else
+    {
+        <ul>
+            @foreach (var b in Model.Branslar)
+            {
+                <li>@b</li>
+            }
+        </ul>
+    }
+
+    <h4 class="mt-4">🧾 Üyelik Planı</h4>
+    @if (Model.PlanAdi == null)
+    {
+        <p class="text-muted">Aktif üyelik bulunmuyor.</p>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p><strong>Plan:</strong> @Model.PlanAdi</p>
+                <p><strong>Başlangıç:</strong> @Model.Baslangic?.ToString("dd.MM.yyyy")</p>
+                <p><strong>Kalan Giriş Hakkı:</strong> @Model.KalanHakki</p>
+                <p><strong>Bakiye:</strong> @Model.Bakiye ₺</p>
+            </div>
+        </div>
+    }
+</div>
